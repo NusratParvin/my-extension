@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Currency Converter",
+  "version": "1.0",
+  "description": "A sleek currency converter extension",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "1": "icons/1.png"
+    }
+  },
+  "icons": {
+    "1": "icons/1.png"
+  },
+  "permissions": ["storage"]
+}

@@ -11,15 +11,15 @@ const ExchangeHouseCard = ({
 }) => {
   return (
     <div
-      className={`card card-compact bg-base-100 shadow-md mb-3 border ${
-        isOptimal ? "border-green-500" : "border-base-300"
+      className={`card card-compact bg-base-100 shadow-md mb-2 border ${
+        isOptimal ? "border-green-300" : "border-base-300"
       }`}
     >
-      <div className="card-body">
+      <div className="card-body p-3.5">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className={`avatar placeholder ${color}`}>
-              <div className="bg-neutral text-neutral-content rounded-full w-10 h-10">
+              <div className="bg-neutral text-neutral-content rounded-full w-7 h-7">
                 <span className="text-sm">{name.charAt(0)}</span>
               </div>
             </div>
@@ -30,7 +30,7 @@ const ExchangeHouseCard = ({
           </div>
           <div className="text-right">
             {isOptimal && (
-              <div className="badge badge-success gap-2 mb-1">
+              <div className="badge badge-sm  text-white font-semibold  badge-success gap-1 mb-1">
                 <FaCheck /> Optimal
               </div>
             )}

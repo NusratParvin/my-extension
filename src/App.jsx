@@ -7,35 +7,6 @@ import SummaryCard from "./components/SummaryCard";
 import RateTypeSelector from "./components/RateTypeSelector";
 import ThemeToggle from "./components/ThemeToggle";
 
-// function App() {
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <>
-//       <div>
-//         <h1 class="text-3xl font-bold underline">Hello world!</h1>
-//         <button className="btn btn-success">Success</button>
-
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.jsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   );
-// }
-
 function App() {
   // Currencies data
   const currencies = [
@@ -158,24 +129,22 @@ function App() {
               disabled={false}
             />
 
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text text-primary font-medium">
-                  Amount
-                </span>
+            <div className="">
+              <label className="block text-sm font-medium mb-1 text-primary">
+                Amount :
               </label>
               <input
                 type="number"
-                className="input input-bordered w-full"
+                className="input validator border-gray-200 w-full py-0"
                 required
                 placeholder="Enter amount"
                 title="Enter amount"
-                min="0"
+                defaultValue={1}
               />
             </div>
 
             <div className="mt-6">
-              <h2 className="text-lg font-semibold mb-3">
+              <h2 className="text-lg text-primary font-semibold mb-3 ">
                 Exchange Houses Comparison
               </h2>
               <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
@@ -214,8 +183,8 @@ function App() {
               />
             )}
 
-            <div className="flex justify-between items-center text-sm mt-4">
-              <div className="text-gray-500">
+            <div className="flex justify-between items-center text-sm mt-3  px-2">
+              <div className="text-gray-500 text-xs">
                 Last updated: {formatTime(lastUpdated)}
               </div>
               <button

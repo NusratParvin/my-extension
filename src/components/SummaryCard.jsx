@@ -9,10 +9,10 @@ const SummaryCard = ({
   toCurrency,
 }) => {
   return (
-    <div className="card bg-base-200 border border-base-300 mb-4">
-      <div className="card-body p-4">
+    <div className="card bg-base-200 border border-base-300">
+      <div className="card-body p-3">
         <div className="flex items-start">
-          <FaCheckCircle className="text-green-500 text-xl mr-2 mt-1" />
+          <FaCheckCircle className="text-green-500 text-lg mr-2 mt-1" />
           <div>
             <p className="font-medium">
               Optimal conversion:{" "}

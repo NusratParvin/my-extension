@@ -6,6 +6,7 @@ import ExchangeHouseCard from "./components/ExchangeHouseCard";
 import SummaryCard from "./components/SummaryCard";
 import RateTypeSelector from "./components/RateTypeSelector";
 import ThemeToggle from "./components/ThemeToggle";
+import currencyData from "./js/currencyList";
 
 function App() {
   // Currencies data
@@ -87,6 +88,10 @@ function App() {
     setLastUpdated(new Date());
   };
 
+  const handleCheckRates = () => {
+    console.log(rateType, toCurrency);
+  };
+
   return (
     <div
       className="p-2 min-h-screen w-[500px]"
@@ -125,22 +130,27 @@ function App() {
               }
               currency={toCurrency}
               onCurrencyChange={setToCurrency}
-              currencies={currencies}
+              currencies={currencyData}
               disabled={false}
             />
 
-            <div className="">
-              <label className="block text-sm font-medium mb-1 text-primary">
-                Amount :
-              </label>
-              <input
-                type="number"
-                className="input validator border-gray-200 w-full py-0"
-                required
-                placeholder="Enter amount"
-                title="Enter amount"
-                defaultValue={1}
-              />
+            <div className="flex flex-row gap-4 justify-between items-end">
+              <div className="flex-1">
+                <label className="block text-sm font-medium mb-1 text-primary">
+                  Amount :
+                </label>
+                <input
+                  type="number"
+                  className="input validator input-sm border-gray-200 w-full py-0 text-sm"
+                  required
+                  placeholder="Enter amount"
+                  title="Enter amount"
+                  defaultValue={1}
+                />
+              </div>
+              <button className="btn btn-primary" onClick={handleCheckRates}>
+                Find Rates
+              </button>
             </div>
 
             <div className="mt-6">

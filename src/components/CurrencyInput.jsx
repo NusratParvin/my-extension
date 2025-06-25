@@ -17,7 +17,7 @@ const CurrencyInput = ({
       <div className="join w-full ">
         {onCurrencyChange ? (
           <select
-            className="join-item select select-bordered border-gray-200 bg-gray-50 min-w-[150px] py-0 text-blue-500 font-semibold"
+            className="join-item select select-bordered select-sm border-gray-200 bg-gray-50 min-w-[150px] py-0 text-blue-500 font-semibold"
             value={currency}
             onChange={(e) => onCurrencyChange(e.target.value)}
             disabled={disabled}
@@ -35,7 +35,7 @@ const CurrencyInput = ({
         )}
         <input
           type="number"
-          className="join-item input input-bordered w-full font-semibold text-lg border-gray-200"
+          className="join-item input input-bordered input-sm w-full font-semibold text-sm border-gray-200"
           placeholder="0.00"
           value={amount}
           onChange={(e) => onAmountChange(e.target.value)}

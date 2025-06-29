@@ -9,18 +9,6 @@ import ThemeToggle from "./components/ThemeToggle";
 import currencyData from "./js/currencyList";
 
 function App() {
-  // Currencies data
-  const currencies = [
-    { code: "AED", name: "UAE Dirham" },
-    { code: "USD", name: "US Dollar" },
-    { code: "EUR", name: "Euro" },
-    { code: "GBP", name: "British Pound" },
-    { code: "INR", name: "Indian Rupee" },
-    { code: "CAD", name: "Canadian Dollar" },
-    { code: "AUD", name: "Australian Dollar" },
-    { code: "JPY", name: "Japanese Yen" },
-  ];
-
   // Exchange houses data
   const exchangeHouses = [
     {
@@ -88,8 +76,17 @@ function App() {
     setLastUpdated(new Date());
   };
 
-  const handleCheckRates = () => {
-    console.log(rateType, toCurrency);
+  const handleCheckRates = async () => {
+    console.log(toCurrency, rateType);
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/rates?currency=${toCurrency}&type=${rateType}`
+      );
+      const data = await res.json();
+      console.log("All Rates →", data.rates);
+    } catch (e) {
+      console.error("Error fetching rates:", e);
+    }
   };
 
   return (

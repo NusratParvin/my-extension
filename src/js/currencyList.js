@@ -159,19 +159,37 @@ const ansariCurrencies = [
   { code: "THB", name: "THAILAND BAHT" },
 ];
 
-const mergedCurrencies = [
-  ...luluCurrencies,
-  ...fardanCurrencies,
-  ...ansariCurrencies,
-];
+// const mergedCurrencies = [
+//   ...luluCurrencies,
+//   ...fardanCurrencies,
+//   ...ansariCurrencies,
+// ];
 
-const deDuplicatedArray = new Map(
-  mergedCurrencies.map((item) => [item.code, item])
-).values();
+// const deDuplicatedArray = new Map(
+//   mergedCurrencies.map((item) => [item.code, item])
+// ).values();
 
-const uniqueCurrencies = Array.from(deDuplicatedArray);
-uniqueCurrencies.sort((a, b) => a.name.localeCompare(b.name));
+// const uniqueCurrencies = Array.from(deDuplicatedArray);
+// uniqueCurrencies.sort((a, b) => a.name.localeCompare(b.name));
+const getCommonCurrencies = (a, b, c) => {
+  // Create a Set of currency codes from the first array
+  const codesB = new Set(b.map((x) => x.code));
+  const codesC = new Set(c.map((x) => x.code));
 
-// console.log(uniqueCurrencies);
+  // Filter the first array to include only currencies present in both other sets
+  return a.filter(
+    (currency) => codesB.has(currency.code) && codesC.has(currency.code)
+  );
+};
 
-export default uniqueCurrencies;
+const commonCurrencies = getCommonCurrencies(
+  luluCurrencies,
+  fardanCurrencies,
+  ansariCurrencies
+);
+
+// Sort alphabetically by currency name
+commonCurrencies.sort((a, b) => a.name.localeCompare(b.name));
+
+console.log(commonCurrencies);
+export default commonCurrencies;

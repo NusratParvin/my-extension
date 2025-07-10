@@ -32,10 +32,11 @@ function App() {
   ];
 
   // State
-  const [amount, setAmount] = useState(1000);
+  const [amount, setAmount] = useState(100);
   const [fromCurrency] = useState("AED");
   const [toCurrency, setToCurrency] = useState("INR");
   const [rateType, setRateType] = useState("buy");
+  const [result, setResult] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [optimalHouse, setOptimalHouse] = useState(null);
@@ -45,8 +46,9 @@ function App() {
     let maxRate = 0;
     let optimal = null;
 
-    exchangeHouses.forEach((house) => {
-      const rate = house.rates[rateType];
+    result.forEach((house) => {
+      const rate = house.rate;
+
       if (rate > maxRate) {
         maxRate = rate;
         optimal = house;
@@ -54,7 +56,7 @@ function App() {
     });
 
     setOptimalHouse(optimal);
-  }, [rateType]);
+  }, [result]);
 
   // Toggle dark mode
   const toggleDarkMode = () => {
@@ -82,13 +84,15 @@ function App() {
       const res = await fetch(
         `http://localhost:5000/api/rates?currency=${toCurrency}&type=${rateType}`
       );
+
       const data = await res.json();
-      console.log("All Rates →", data.rates);
+      // console.log("All Rates →", data);
+      setResult(data);
     } catch (e) {
       console.error("Error fetching rates:", e);
     }
   };
-
+  console.log(result);
   return (
     <div
       className="p-2 min-h-screen w-[500px]"
@@ -122,9 +126,9 @@ function App() {
 
             <CurrencyInput
               label="Select Currency :"
-              amount={
-                amount * (optimalHouse ? optimalHouse.rates[rateType] : 22.61)
-              }
+              amount={Number(
+                (amount * (optimalHouse ? optimalHouse.rate : 0)).toFixed(2)
+              )}
               currency={toCurrency}
               onCurrencyChange={setToCurrency}
               currencies={currencyData}
@@ -155,24 +159,23 @@ function App() {
                 Exchange Houses Comparison
               </h2>
               <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
-                {exchangeHouses.map((house) => {
-                  const rate = house.rates[rateType];
+                {result.map((house) => {
+                  const rate = house.rate;
                   const convertedAmount = amount * rate;
                   const isOptimal =
                     optimalHouse && optimalHouse.id === house.id;
                   const difference =
                     isOptimal || !optimalHouse
                       ? 0
-                      : amount * (optimalHouse.rates[rateType] - rate);
+                      : amount * (optimalHouse.rate - rate);
 
                   return (
                     <ExchangeHouseCard
                       key={house.id}
-                      name={house.name}
-                      rate={rate}
+                      houseInfo={house}
                       convertedAmount={convertedAmount}
                       isOptimal={isOptimal}
-                      difference={difference.toFixed(0)}
+                      difference={difference.toFixed(3)}
                       color={house.color}
                     />
                   );
@@ -184,7 +187,7 @@ function App() {
               <SummaryCard
                 optimalHouse={optimalHouse.name}
                 amount={amount}
-                convertedAmount={amount * optimalHouse.rates[rateType]}
+                convertedAmount={amount * optimalHouse.rate}
                 fromCurrency={fromCurrency}
                 toCurrency={toCurrency}
               />

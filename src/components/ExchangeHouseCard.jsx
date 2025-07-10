@@ -2,8 +2,7 @@ import React from "react";
 import { FaCheck } from "react-icons/fa";
 
 const ExchangeHouseCard = ({
-  name,
-  rate,
+  houseInfo,
   convertedAmount,
   isOptimal,
   difference,
@@ -20,12 +19,17 @@ const ExchangeHouseCard = ({
           <div className="flex items-center">
             <div className={`avatar placeholder ${color}`}>
               <div className="bg-neutral text-neutral-content rounded-full w-7 h-7">
-                <span className="text-sm">{name.charAt(0)}</span>
+                <span className="text-sm">
+                  {houseInfo?.houseName?.charAt(0)}
+                </span>
               </div>
             </div>
             <div className="ml-3">
-              <h3 className="font-bold">{name}</h3>
-              <p className="text-sm text-gray-500">1 AED = {rate} INR (Buy)</p>
+              <h3 className="font-bold">{houseInfo?.houseName}</h3>
+              <p className="text-sm text-gray-500">
+                1 AED = {houseInfo?.rate} {houseInfo?.currencyCode} (
+                {houseInfo?.rateType?.toUpperCase()})
+              </p>
             </div>
           </div>
           <div className="text-right">

@@ -7,8 +7,10 @@ const CurrencyInput = ({
   currency,
   onCurrencyChange,
   currencies,
-  disabled = false,
+  disabled = true,
 }) => {
+  console.log(amount);
+
   return (
     <div className="mb-1 -mt-3">
       <label className="block text-sm font-medium mb-1 text-primary">
@@ -23,6 +25,7 @@ const CurrencyInput = ({
             disabled={disabled}
           >
             {currencies.map((curr) => (
+              // <option key={curr.code} value={`${curr.code}-${curr.name}`}>
               <option key={curr.code} value={curr.code}>
                 {curr.code} - {curr.name}
               </option>
@@ -33,14 +36,16 @@ const CurrencyInput = ({
             <span className="font-medium">{currency}</span>
           </div>
         )}
-        <input
-          type="number"
-          className="join-item input input-bordered input-sm w-full font-semibold text-sm border-gray-200"
-          placeholder="0.00"
-          value={amount}
-          onChange={(e) => onAmountChange(e.target.value)}
-          disabled={disabled}
-        />
+        <div className="flex items-center gap-2 border border-gray-200 rounded-e-md border-s-0 px-2 py-1">
+          <input
+            className="w-full font-semibold text-sm focus:outline-none focus:ring-0 focus:border-none"
+            placeholder="0.00"
+            value={amount}
+            onChange={(e) => onAmountChange(e.target.value)}
+            disabled={disabled}
+          />
+          <span className="text-sm font-medium text-gray-400">AED</span>
+        </div>
       </div>
     </div>
   );

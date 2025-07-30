@@ -28,19 +28,39 @@ function App() {
     setLastUpdated(new Date());
   };
 
-  // Calculate optimal house
   useEffect(() => {
-    let maxRate = 0;
+    if (!result || result.length === 0) return;
+
+    // Filter out houses with no valid rate
+    const validHouses = result.filter(
+      (house) => house.rate !== null && house.rate !== undefined
+    );
+
+    if (validHouses.length === 0) {
+      setOptimalHouse(null);
+      return;
+    }
+
     let optimal = null;
 
-    result.forEach((house) => {
-      const rate = house.rate;
-
-      if (rate > maxRate) {
-        maxRate = rate;
-        optimal = house;
-      }
-    });
+    if (rateType === "buy") {
+      // Max rate for buying
+      optimal = validHouses.reduce((prev, curr) =>
+        curr.rate > prev.rate ? curr : prev
+      );
+    } else if (rateType === "sell") {
+      // Min rate for selling
+      optimal = validHouses.reduce((prev, curr) =>
+        curr.rate < prev.rate ? curr : prev
+      );
+    } else if (rateType === "transfer") {
+      // For transfers (assuming you have a fee field)
+      optimal = validHouses.reduce((prev, curr) => {
+        const prevEffective = prev.rate + (prev.fee || 0);
+        const currEffective = curr.rate + (curr.fee || 0);
+        return currEffective < prevEffective ? curr : prev;
+      });
+    }
 
     setOptimalHouse(optimal);
   }, [result]);
@@ -67,7 +87,6 @@ function App() {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
-  // Refresh rates
   const handleRefreshRates = () => {
     // fetch fresh rates
     setOptimalHouse(null);
@@ -79,6 +98,8 @@ function App() {
   const handleCheckRates = async () => {
     setIsLoading(true);
     setResult([]);
+    setOptimalHouse(null);
+
     try {
       const res = await fetch(
         `http://localhost:5000/api/rates?currency=${toCurrency}&type=${rateType}`
@@ -91,8 +112,7 @@ function App() {
       console.error("Error fetching rates:", e);
     }
   };
-  console.log(result);
-  console.log(isLoading);
+
   return (
     <div
       className="p-2 min-h-screen w-[500px]  "

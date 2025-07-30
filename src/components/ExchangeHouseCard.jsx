@@ -1,13 +1,25 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
 
+import alfardanLogo from "../assets/logos/alfardan.png";
+import luluLogo from "../assets/logos/lulu.png";
+// import alansariLogo from "../assets/logos/alansari.png";
+
+const logoMap = {
+  "Al Fardan Exchange": alfardanLogo,
+  "Lulu Exchange": luluLogo,
+  // "Al Ansari Exchange": alansariLogo,
+};
+
 const ExchangeHouseCard = ({
   houseInfo,
   convertedAmount,
   isOptimal,
   difference,
-  color,
+  // color,
 }) => {
+  const logo = logoMap[houseInfo?.houseName] || null;
+
   return (
     <div
       className={`card card-compact light:bg-base-100  dark:bg-gray-500/90 shadow-md mb-2 border ${
@@ -19,13 +31,20 @@ const ExchangeHouseCard = ({
       <div className="card-body p-3.5">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <div className={`avatar placeholder ${color}`}>
-              <div className="bg-neutral text-neutral-content rounded-full w-7 h-7">
-                <span className="text-sm">
-                  {houseInfo?.houseName?.charAt(0)}
-                </span>
-              </div>
+            <div className="flex items-center">
+              {logo ? (
+                <div className="w-8 h-8 rounded-full overflow-hidden bg-base-100">
+                  <img
+                    src={logo}
+                    alt={houseInfo?.houseName}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="w-7 h-7 bg-gray-300 rounded-full" />
+              )}
             </div>
+
             <div className="ml-3">
               <h3 className="font-bold">{houseInfo?.houseName}</h3>
               <p className="text-xs text-gray-500">
